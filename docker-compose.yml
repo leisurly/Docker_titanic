@@ -1,0 +1,59 @@
+version: "3.11"
+
+services:
+  mysql_titanic:
+    image: mysql:8.0
+    container_name: container_mysql_titanic
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+    ports:
+      - "12345:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - titanic-network
+  container_db_init:
+    build:
+      context: .
+      dockerfile: db_mysql/Dockerfile
+    depends_on:
+      mysql_titanic:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql_titanic
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+    networks:
+      - titanic-network
+  flask-app:
+    build:
+      context: .
+      dockerfile: flask_app/Dockerfile
+    volumes:
+      - ./db_mysql:/app/db_mysql
+    container_name: container_flask
+    ports:
+      - "10108:5000"
+    networks:
+      - titanic-network
+    depends_on:
+      mysql_titanic:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+
+volumes:
+  mysql_titanic_data:
+
+
+networks:
+  titanic-network:
+    driver: bridge

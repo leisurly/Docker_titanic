@@ -1,0 +1,17 @@
+# 環境設定
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+
+# VSCode 設定
+.vscode/
+
+# Docker build 檔案
+**/__pycache__/
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
