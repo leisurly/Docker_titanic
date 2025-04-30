@@ -53,7 +53,8 @@ MYSQL_DB=titanic
 ```bash
 docker-compose up --build
 ```
-Auto start database and import CSV and sopen the web `http://localhost:10108`
+Auto start database and import CSV 
+When all done open the web `http://localhost:10108`
 
 ---
 
