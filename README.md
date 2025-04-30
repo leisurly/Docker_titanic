@@ -72,8 +72,7 @@ you can see the top 20 in the site
 | Service | Class| container |
 |------|------|----------|
 | MySQL database | connect_database | `container_mysql_titanic` |
-| create table + import csv| set_database|                     |
-│                          | import_data | `container_db_init` |
+| create table + import csv| set_database <br> import_data | `container_db_init` |
 | Flask Web_API |flask_app| `container_flask` |
 
 ---
