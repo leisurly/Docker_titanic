@@ -37,8 +37,8 @@ services:
     volumes:
       - ./db_mysql:/app/db_mysql
     container_name: container_flask
-    ports:
-      - "10108:5000"
+    expose:
+      - "5000"
     networks:
       - titanic-network
     depends_on:
@@ -49,6 +49,17 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DB}
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - flask-app
+    networks:
+      - titanic-network
 
 volumes:
   mysql_titanic_data:
