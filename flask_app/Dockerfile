@@ -11,5 +11,6 @@ COPY flask_app/ .
 
 # 設定 PYTHONPATH 允許跨資料夾 import
 ENV PYTHONPATH=/app
+
 # 進入 flask_app 執行主程式
 CMD ["python", "flask_app.py"]
