@@ -22,6 +22,7 @@ Docker_titanic/
 ├── db_mysql/               # create database
 │   ├── connect_database.py
 │   ├── set_database.py
+│   ├── load_csv.py
 │   ├── import_data.py
 │   ├── Dockerfile
 │   └── requirements.txt
